@@ -6,23 +6,40 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
-        <h1>Hello World</h1>
-        <h2>
-            <div class = "tableau"> 
+        <header>
+            <span>
+                <img src="https://github.com/Robebou/EfreiElo/blob/main/ressource/image/4eSport_Light.gif" alt="4esLogo"/>
+                <button>Bouton 1</button>
+                <button>Bouton 2</button>
+                <button>Bouton 3</button>
+                <button>Bouton 4</button>
+            </span>
+        </header>
+            <div id = "Tab_Joueur"> 
                 <table>
+                    <tr>
+                        <th> Icone </th>
+                        <th> Nom d'invocateur </th>
+                        <th> Level </th>
+                        <th> Elo </th>
+                    </tr>
                     <% info_players.forEach(info_players => { %>
                         <tr>
+                            <th> <%= info_players.icone%> </th>
                             <th> <%= info_players.nom_invocateur%></th>
                             <th> <%= info_players.lvl%> </th>
+                            <th> <%= info_players.Elo%> </th>
                         </tr>
-                    <% }); %>
-                    
+                    <% }); %>   
                 </table>
             </div>
         </h2>
+        <footer>
+
+        </footer>
         <script src="" async defer></script>
     </body>
 </html>
