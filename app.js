@@ -13,7 +13,7 @@ const api_lol_key = 'RGAPI-0e164945-9a84-4d44-a5d7-b3cf4dbf25cd'
 var db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "123",
+    password: "1234",
     database: "EfreiElo"
 })
 
@@ -56,7 +56,7 @@ function summoner_info_sql_to_dict(info_players_query) {
             nom_invocateur: "",
             lvl: "",
             icone: "",
-            Elo: "",
+            elo: "",
             opgg: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
