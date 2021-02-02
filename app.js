@@ -23,10 +23,9 @@ db.connect(function(err) {
 // Listen on port 3000
 app.listen(port,() => console.info(`Lisenting on port ${port}`))
 
-app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/css'))
-app.use('/js', express.static(__dirname + 'public/js'))
-app.use('/img', express.static(__dirname + 'public/img'))
+app.use(express.static('views'))
+app.use('views', express.static(__dirname + 'views'))
+
 
 // Set Views
 app.set('views','./views')
@@ -44,6 +43,32 @@ async function get_player_data_from_api(info_players) {
 }   
 
 app.get('',(req,res) => {
+
+    const info_players = [{
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    },
+    {
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    },{
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    },{
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Bronze"
+    }
+]
+    res.render('index',{info_players: info_players})
+
     let sql = "SELECT id, nom_invocateur,opgg FROM info_players"
     let query = db.query(sql, (err, info_players, fields) => {
         if (err) throw err;   
@@ -51,6 +76,7 @@ app.get('',(req,res) => {
         get_player_data_from_api(info_players)
         
     })
+
 })
 
 app.get('/register',(req,res) => {

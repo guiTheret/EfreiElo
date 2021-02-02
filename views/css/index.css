@@ -1,0 +1,17 @@
+* {
+	background-color: #131c2e;
+}
+
+header {
+	background-color: none;
+	height: 8vmax;
+	width: auto;
+}
+
+#Logo {
+	width: 50px;
+}
+
+#Tab_Joueur {
+	width: 500px;
+}
