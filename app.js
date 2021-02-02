@@ -8,10 +8,9 @@ const mysql = require('mysql')
 // Listen on port 3000
 app.listen(port,() => console.info(`Lisenting on port ${port}`))
 
-app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/css'))
-app.use('/js', express.static(__dirname + 'public/js'))
-app.use('/img', express.static(__dirname + 'public/img'))
+app.use(express.static('views'))
+app.use('views', express.static(__dirname + 'views'))
+
 
 // Set Views
 app.set('views','./views')
@@ -38,7 +37,7 @@ app.get('',(req,res) => {
         icone : "Image",
         nom_invocateur : "Robert",
         lvl: "45",
-        Elo: "Master"
+        Elo: "Bronze"
     }
 ]
     res.render('index',{info_players: info_players})
