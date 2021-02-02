@@ -2,6 +2,8 @@
 const express = require('express')
 const app = express()
 const port = 1234
+const mysql = require('mysql')
+
 
 // Listen on port 3000
 app.listen(port,() => console.info(`Lisenting on port ${port}`))
@@ -16,7 +18,15 @@ app.set('views','./views')
 app.set('view engine','ejs')
 
 app.get('',(req,res) => {
-    res.render('index',{text : 'Test'})
+    const info_players = [{
+        nom_invocateur : "Robert",
+        lvl: "45"
+    },
+    {
+        nom_invocateur :"Nemesis",
+        lvl:"18"
+    }]
+    res.render('index',{info_players: info_players})
 })
 
 app.get('/register',(req,res) => {

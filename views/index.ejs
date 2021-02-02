@@ -11,7 +11,17 @@
     <body>
         <h1>Hello World</h1>
         <h2>
-            <%= text %>
+            <div class = "tableau"> 
+                <table>
+                    <% info_players.forEach(info_players => { %>
+                        <tr>
+                            <th> <%= info_players.nom_invocateur%></th>
+                            <th> <%= info_players.lvl%> </th>
+                        </tr>
+                    <% }); %>
+                    
+                </table>
+            </div>
         </h2>
         <script src="" async defer></script>
     </body>
