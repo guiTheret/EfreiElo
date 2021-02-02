@@ -19,13 +19,28 @@ app.set('view engine','ejs')
 
 app.get('',(req,res) => {
     const info_players = [{
+        icone : "Image",
         nom_invocateur : "Robert",
-        lvl: "45"
+        lvl: "45",
+        Elo: "Master"
     },
     {
-        nom_invocateur :"Nemesis",
-        lvl:"18"
-    }]
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    },{
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    },{
+        icone : "Image",
+        nom_invocateur : "Robert",
+        lvl: "45",
+        Elo: "Master"
+    }
+]
     res.render('index',{info_players: info_players})
 })
 
