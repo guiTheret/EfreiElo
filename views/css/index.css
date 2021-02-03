@@ -4,7 +4,10 @@
 }
 
 #logo_image {
-	max-width: 50px;
+	position: absolute;
+	top: 1em;
+	left: 2em;
+	max-width: 350px;
 	height: auto;
 }
 
@@ -50,9 +53,9 @@
 }
 
 #Container_Tab {
-	position: absolute;
+	position: relative;
 	width: 70%;
-	top: 20%;
+	top: 14%;
 	left: 15%;
 	right: 15%;
 }
@@ -73,10 +76,11 @@ table.Tab_Joueur th {
 }
 table.Tab_Joueur tbody td {
 	font-size: 13px;
-	font-weight: bold;
+	font-weight: normal;
 }
+
 table.Tab_Joueur tr:nth-child(even) {
-	background: #d0e4f5;
+	background-color: black;
 }
 table.Tab_Joueur thead {
 	background: #232323;
@@ -84,16 +88,41 @@ table.Tab_Joueur thead {
 }
 table.Tab_Joueur thead th {
 	font-size: 15px;
-	font-weight: bold;
+	font-weight: 600;
 	color: #ffffff;
 	background-color: none;
 }
 table.Tab_Joueur tfoot {
-	font-weight: bold;
-	border: 1px solid #232323;
 	background-color: none;
 }
 table.Tab_Joueur th img {
 	height: 10em;
 	border-radius: 15%;
+}
+
+#icon_summoner {
+	height: 5em;
+	border-radius: 15%;
+}
+
+tr:hover td {
+	background-color: #08183b;
+}
+
+table.Tab_Joueur td {
+	transition: all 0.2s ease-in-out;
+}
+
+table.Tab_Joueur td:hover {
+	transform: scale(1.1);
+}
+
+table.Tab_Joueur thead th {
+	transition: all 0.2s ease-in-out;
+	cursor: url('../../ressource/image/FuckRobebou.png'), pointer;
+}
+table.Tab_Joueur thead th:hover {
+	transform: scale(1.2);
+	font-weight: 900;
+	text-decoration: underline;
 }
