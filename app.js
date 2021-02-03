@@ -132,13 +132,19 @@ function summoner_info_sql_to_dict(info_players_query) {
             lvl: "",
             icone: "",
             elo: "",
-            opgg: ""
+            opgg: "",
+            rank: "",
+            tier: "",
+            winrate: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
         dict.opgg = element.opgg;
         dict.lvl = element.lvl;
         dict.elo = element.elo;
         dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
+        dict.rank = element.rank_ok;
+        dict.winrate = element.winrate;
+        dict.tier = element.tier;
         info_players.push(dict);
     });
     return info_players;
@@ -146,14 +152,14 @@ function summoner_info_sql_to_dict(info_players_query) {
 
 app.get('',(req,res) => {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo FROM info_players"
+    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
     
 })
-insert_database_player_info("LeManguier")
+insert_database_player_info("4es GROS POISSON")
 
 app.get('/register',(req,res) => {
     res.render('register')
@@ -161,7 +167,7 @@ app.get('/register',(req,res) => {
 
 app.get('/index',(req,res) => {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo FROM info_players"
+    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
