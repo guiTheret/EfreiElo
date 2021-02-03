@@ -39,22 +39,6 @@ app.set('view engine','ejs')
 
 async function get_player_data_step1(summoner) {   
     const response = await fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${api_lol_key}`);
-<<<<<<< Updated upstream
-    return response
-    
-}  
-async function get_player_data_step2(EncryptedID) {
-    const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${EncryptedID}?api_key=${api_lol_key}`)
-    return response.json()
-}
-async function insert_database_player_info(summoner) {
-    get_player_data_step1(summoner)
-    .then(response => {
-        return response.json()
-    })   
-    .then(data => {
-        console.log(data)
-=======
     return response.json()
     
 } 
@@ -62,25 +46,26 @@ async function get_player_data_step2(encryptedID) {
     const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedID}?api_key=${api_lol_key}`)
     return response.json()
 }
+async function get_data_outside_scope(data,summoner,opgg) {
+    let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
+    let query_check = await db.query(check_sql,function(err, result) {
+        if (err) throw err;
+        if (result != "") {
+            console.log("USER " + summoner + " ALREADY EXISTS");
+        } else {
+            let sql = `INSERT INTO info_players (nom_invocateur,opgg,accountID,icone,lvl) VALUES ('${summoner}','${opgg}','${data.id}','${data.profileIconId}',${data.summonerLevel})`;
+            let query = db.query(sql, function (err,result) {
+                if (err) throw err;
+                console.log("User " + summoner + " was inserted in database");
+            })
+        }
+    })
+}
 async function insert_database_player_info(summoner,opgg) {
     await get_player_data_step1(summoner)
     .then(data => {
-        var exist = false;
-        let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
-        let query_check = db.query(check_sql,function(err, result) {
-            if (err) throw err;
-            if (result != "") {
-                console.log("USER " + summoner + " ALREADY EXISTS");
-            } else {
-                let sql = `INSERT INTO info_players (nom_invocateur,opgg,accountID,icone,lvl) VALUES ('${summoner}','${opgg}','${data.id}','${data.profileIconId}',${data.summonerLevel})`;
-                let query = db.query(sql, function (err,result) {
-                    if (err) throw err;
-                    console.log("User " + summoner + " was inserted in database");
-                })
-            }
-        })
-    })  
-    insert_final_value(summoner)  
+        get_data_outside_scope(data,summoner,opgg)
+    })   
 }
 function insert_final_value(summoner) {
     let sql = `SELECT accountID FROM info_players where nom_invocateur = '${summoner}'`;
@@ -92,7 +77,6 @@ function insert_final_value(summoner) {
             console.log(data)
         })
         
->>>>>>> Stashed changes
     })
 }
 
@@ -116,8 +100,6 @@ function summoner_info_sql_to_dict(info_players_query) {
     return info_players;
 }
 
-insert_database_player_info("Le Manguier")
-
 app.get('',(req,res) => {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo FROM info_players"
@@ -125,7 +107,7 @@ app.get('',(req,res) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
-    insert_database_player_info("Manguier")
+    insert_database_player_info("Zeussky")
 })
 
 app.get('/register',(req,res) => {
