@@ -1,7 +1,6 @@
 # EfreiElo
 
-npm install ejs
-npm install nodemon
-npm install express
-npm install mysql
+npm install ejs express nodemon mysql node-fetch
+
+
 
