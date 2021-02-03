@@ -6,6 +6,7 @@ const app = express()
 const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
+const axios = require('axios').default;
 
 const api_lol_key = 'RGAPI-0e164945-9a84-4d44-a5d7-b3cf4dbf25cd'
 
@@ -33,20 +34,26 @@ app.use('views', express.static(__dirname + 'views'))
 app.set('views','./views')
 app.set('view engine','ejs')
 
+//const step_1_request = `https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${api_lol_key}`
+//const step_2_request = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${EncryptedID}?api_key=${api_lol_key}`
+
 async function get_player_data_step1(summoner) {   
-    fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${api_lol_key}`)
-    .then(async function(response) {
-        let data = await response.json();
-        console.log(data)
-        return data;
-    })
-}  
-async function insert_database_player_info(summoner) {
-    var data =  get_player_data_step1(summoner)
-    .then(async function () {
-        console.log("data is : " + data)
-    })
+    const response = await fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${api_lol_key}`);
+    return response
     
+}  
+async function get_player_data_step2(EncryptedID) {
+    const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${EncryptedID}?api_key=${api_lol_key}`)
+    return response.json()
+}
+async function insert_database_player_info(summoner) {
+    get_player_data_step1(summoner)
+    .then(response => {
+        return response.json()
+    })   
+    .then(data => {
+        console.log(data)
+    })
 }
 
 function summoner_info_sql_to_dict(info_players_query) {
@@ -78,6 +85,7 @@ app.get('',(req,res) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
+    insert_database_player_info("Manguier")
 })
 
 app.get('/register',(req,res) => {
