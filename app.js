@@ -138,7 +138,7 @@ function summoner_info_sql_to_dict(info_players_query) {
         dict.opgg = element.opgg;
         dict.lvl = element.lvl;
         dict.elo = element.elo;
-        dict.icone = `http://ddragon.leagueoflegends.com/cdn/9.2.1/img/profileicon/${element.icone}.png`;
+        dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
         info_players.push(dict);
     });
     return info_players;
@@ -153,7 +153,7 @@ app.get('',(req,res) => {
     })
     
 })
-insert_database_player_info("GodRobert")
+insert_database_player_info("LeManguier")
 
 app.get('/register',(req,res) => {
     res.render('register')
