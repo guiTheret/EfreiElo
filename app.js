@@ -153,7 +153,7 @@ app.get('',(req,res) => {
     })
     
 })
-insert_database_player_info("GodRobert")
+insert_database_player_info("4es Némésis")
 
 app.get('/register',(req,res) => {
     res.render('register')
