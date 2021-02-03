@@ -10,8 +10,9 @@
     </head>
     <body>
         <header class="main_header">
+            
             <span class="container_header">
-                <span class="logo"><img id="logo_image" src="https://github.com/Robebou/EfreiElo/blob/main/ressource/image/Logo_Blue.png?raw=true" alt="4eSLogo"/></span>
+                
                 <nav class="main-nav">
                     <ul class="main-nav-list">
                         <li>
@@ -30,6 +31,8 @@
                 </nav>
             </span>
         </header>
+        <br><br>
+        <span class="logo"><img id="logo_image" src="https://github.com/Robebou/EfreiElo/blob/main/ressource/image/4eSportHD.gif?raw=true" alt="4eSLogo"/></span>
             <div id="Container_Tab"> 
                 <table class = "Tab_Joueur">
                     <thead>
@@ -47,15 +50,17 @@
                             <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/7/76/Season_2019_-_Grandmaster_1.png"/></th>
                             <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/1/11/Season_2019_-_Master_1.png"/></th>
                             <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Season_2019_-_Diamond_1.png"/></th>
+                            <th><img src="https://i.pinimg.com/originals/d7/47/1e/d7471e2ef48175986e9b75b566f61408.png"/></th>
                         </tr>
                     </tfoot>
                     <tbody>
                     <% info_players.forEach(info_players => { %>
-                        <tr>
+                        <tr class="Line">
                             <td> <img id="icon_summoner" src ="<%= info_players.icone%>"> </td>
                             <td> <%= info_players.nom_invocateur%></td>
                             <td> <%= info_players.lvl%> </td>
-                            <td> <%= info_players.elo%> </td>
+                            <td> Random </td>
+                            <td> 66 % </td>
                         </tr>
                     <% }); %>   
                     </tbody>
