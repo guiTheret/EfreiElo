@@ -142,4 +142,3 @@ insert_database_player_info("4es Némésis")
 app.get('/register',(req,res) => {
     res.render('register')
 })
-

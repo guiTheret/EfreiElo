@@ -58,13 +58,17 @@
 }
 table.Tab_Joueur {
 	font-family: Tahoma, Geneva, sans-serif;
-	border: 2px solid #000000;
+	background-color: #202b43;
+	padding: 10px 25px 10px 25px;
+	border-radius: 3%;
 	width: 100%;
 	text-align: center;
 }
 table.Tab_Joueur td,
 table.Tab_Joueur th {
-	border: 2px solid #aaaaaa;
+	background-color: none;
+	background-color: #202b43;
+	border: none;
 	padding: 3px 3px;
 }
 table.Tab_Joueur tbody td {
@@ -76,15 +80,20 @@ table.Tab_Joueur tr:nth-child(even) {
 }
 table.Tab_Joueur thead {
 	background: #232323;
+	background-color: none;
 }
 table.Tab_Joueur thead th {
 	font-size: 15px;
 	font-weight: bold;
 	color: #ffffff;
+	background-color: none;
 }
 table.Tab_Joueur tfoot {
 	font-weight: bold;
+	border: 1px solid #232323;
+	background-color: none;
 }
 table.Tab_Joueur th img {
 	height: 10em;
+	border-radius: 15%;
 }
