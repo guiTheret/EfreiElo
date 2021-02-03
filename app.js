@@ -44,7 +44,6 @@ async function get_player_data_step1(summoner) {
 } 
 async function get_player_data_step2(encryptedID) {
     const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedID}?api_key=${api_lol_key}`)
-    console.log(response)
     return response
 }
 function isEmpty(obj) {
@@ -79,7 +78,7 @@ async function get_data_outside_scope(data,summoner,opgg) {
         }
     })
     .then(data => {
-        console.log(data)
+        //console.log(data)
         if(data != "error" && isEmpty(data) == false) {
             let winrate = data[0].wins / (data[0].losses + data[0].wins) * 100
             let sql =` UPDATE info_players SET tier = '${data[0].tier}', rank_ok = '${data[0].rank}', lp = ${data[0].leaguePoints}, wins = ${data[0].wins}, looses = ${data[0].losses}, winrate = ${winrate} WHERE accountID = '${data[0].summonerId}'`;
@@ -109,18 +108,6 @@ async function insert_database_player_info(summoner,opgg) {
         
     }) 
 }
-function insert_final_value(summoner) {
-    let sql = `SELECT accountID FROM info_players where nom_invocateur = '${summoner}'`;
-    let query = db.query(sql,function(err, result, fields) {
-        if (err) throw err;
-        console.log(result[0].accountID)
-        get_player_data_step2(result[0].accountID)
-        .then(data => {
-            console.log(data)
-        })
-        
-    })
-}
 function encode_using_utf8(summoner) {   
     return encodeURI(summoner)
 }
@@ -142,8 +129,15 @@ function summoner_info_sql_to_dict(info_players_query) {
         dict.lvl = element.lvl;
         dict.elo = element.elo;
         dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
-        dict.rank = element.rank_ok;
-        dict.winrate = element.winrate;
+        console.log(element.rank_ok)
+        if(element.rank_ok == null) {
+            dict.rank = "UNRANKED"
+            dict.winrate = "UNRANKED"
+        } else {
+            dict.rank = element.rank_ok
+            dict.winrate = element.winrate + " %"
+        }
+        
         dict.tier = element.tier;
         info_players.push(dict);
     });
@@ -159,7 +153,7 @@ app.get('',(req,res) => {
     })
     
 })
-insert_database_player_info("4es GROS POISSON")
+insert_database_player_info("GodRobert")
 
 app.get('/register',(req,res) => {
     res.render('register')
