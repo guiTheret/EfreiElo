@@ -8,7 +8,7 @@ const mysql = require('mysql')
 const fetch = require("node-fetch")
 const axios = require('axios').default;
 
-const api_lol_key = 'RGAPI-0e164945-9a84-4d44-a5d7-b3cf4dbf25cd'
+const api_lol_key = 'RGAPI-3dc4611b-189c-4657-a371-737f52a3976e'
 
 
 var db = mysql.createConnection({
@@ -38,13 +38,14 @@ app.set('view engine','ejs')
 //const step_2_request = `https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${EncryptedID}?api_key=${api_lol_key}`
 
 async function get_player_data_step1(summoner) {   
-    const response = await fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${api_lol_key}`);
-    return response.json()
+    const response = await fetch(`https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${encodeURI(summoner)}?api_key=${api_lol_key}`);
+    return response
     
 } 
 async function get_player_data_step2(encryptedID) {
     const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedID}?api_key=${api_lol_key}`)
-    return response.json()
+    console.log(response)
+    return response
 }
 async function get_data_outside_scope(data,summoner,opgg) {
     let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
@@ -60,12 +61,37 @@ async function get_data_outside_scope(data,summoner,opgg) {
             })
         }
     })
+    get_player_data_step2(data.id)
+    .then(response => {
+        if(response['status'] != 200) {
+            console.log("ERROR API " + response['status'])
+            return "error"
+        } else {
+            console.log("working")
+            return response.json()
+        }
+    })
+    .then(data => {
+        console.log("salut" + data)
+    })
 }
 async function insert_database_player_info(summoner,opgg) {
     await get_player_data_step1(summoner)
+    .then(response =>  {
+        if(response['status'] != 200) {
+            console.log("ERROR API " + response['status'])
+            return "error"
+        } else {
+            return response.json()
+        }
+        
+    })  
     .then(data => {
-        get_data_outside_scope(data,summoner,opgg)
-    })   
+        if(data != "error") {
+            get_data_outside_scope(data,summoner,opgg)
+        }
+        
+    }) 
 }
 function insert_final_value(summoner) {
     let sql = `SELECT accountID FROM info_players where nom_invocateur = '${summoner}'`;
@@ -79,7 +105,9 @@ function insert_final_value(summoner) {
         
     })
 }
-
+function encode_using_utf8(summoner) {   
+    return encodeURI(summoner)
+}
 function summoner_info_sql_to_dict(info_players_query) {
     var info_players = []
     info_players_query.forEach(element => {
@@ -107,8 +135,9 @@ app.get('',(req,res) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
-    insert_database_player_info("Zeussky")
+    
 })
+insert_database_player_info("4es Némésis")
 
 app.get('/register',(req,res) => {
     res.render('register')
