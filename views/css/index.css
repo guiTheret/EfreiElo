@@ -59,31 +59,38 @@
 	left: 15%;
 	right: 15%;
 }
+
 table.Tab_Joueur {
 	font-family: Tahoma, Geneva, sans-serif;
 	background-color: #202b43;
-	padding: 10px 25px 10px 25px;
+	padding: 30px 30px 30px 30px;
+	border: 2px solid #62148d;
 	border-radius: 3%;
 	width: 100%;
 	text-align: center;
 }
+
+.true td {
+	background-color: #202d46;
+}
+
+.false td {
+	background-color: #131c2e;
+}
+
 table.Tab_Joueur td,
 table.Tab_Joueur th {
 	background-color: none;
-	background-color: #202b43;
 	border: none;
 	padding: 3px 3px;
 }
+
 table.Tab_Joueur tbody td {
 	font-size: 13px;
 	font-weight: normal;
 }
 
-table.Tab_Joueur tr:nth-child(even) {
-	background-color: black;
-}
 table.Tab_Joueur thead {
-	background: #232323;
 	background-color: none;
 }
 table.Tab_Joueur thead th {
