@@ -31,7 +31,6 @@
                 </nav>
             </span>
         </header>
-        <br><br>
         <span class="logo"><img id="logo_image" src="https://github.com/Robebou/EfreiElo/blob/main/ressource/image/4eSportHD.gif?raw=true" alt="4eSLogo"/></span>
             <div id="Container_Tab"> 
                 <table class = "Tab_Joueur">
@@ -54,25 +53,20 @@
                         </tr>
                     </tfoot>
                     <tbody>
-
                     <% Pair=true %>
-
                     <% info_players.forEach(info_players => { %>
                         <tr class="<%=Pair%>">
                             <td> <img id="icon_summoner" src ="<%= info_players.icone%>"> </td>
                             <td> <%= info_players.nom_invocateur%></td>
                             <td> <%= info_players.lvl%> </td>
-                            <td> Random </td>
-                            <td> 66 % </td>
+                            <td> <%= info_players.rank%> </td>
+                            <td> <%= info_players.winrate%> </td>
                         </tr>
-
                     <% Pair = !Pair;%>
-
                     <% }); %>   
                     </tbody>
                 </table>
             </div>
-        </h2>
         <footer>
 
         </footer>
