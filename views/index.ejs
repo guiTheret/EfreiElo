@@ -54,6 +54,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
+                    <% var compteur = 0 %>
                     <% info_players.forEach(info_players => { %>
                         <tr class="Line">
                             <td> <img id="icon_summoner" src ="<%= info_players.icone%>"> </td>
@@ -61,7 +62,9 @@
                             <td> <%= info_players.lvl%> </td>
                             <td> Random </td>
                             <td> 66 % </td>
+                            <td><%= compteur%></td>
                         </tr>
+                        <% compteur += 1 %>
                     <% }); %>   
                     </tbody>
                 </table>
