@@ -158,3 +158,12 @@ insert_database_player_info("GodRobert")
 app.get('/register',(req,res) => {
     res.render('register')
 })
+
+app.get('/index',(req,res) => {
+    let info_players = [];
+    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo FROM info_players"
+    let query = db.query(sql, (err, info_players_query, fields) => {
+        info_players = summoner_info_sql_to_dict(info_players_query)
+        res.render('index',{info_players: info_players}) 
+    })
+})
