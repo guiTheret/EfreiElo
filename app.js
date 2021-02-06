@@ -8,7 +8,7 @@ const mysql = require('mysql')
 const fetch = require("node-fetch")
 const axios = require('axios').default;
 
-const api_lol_key = 'RGAPI-3dc4611b-189c-4657-a371-737f52a3976e'
+const api_lol_key = 'RGAPI-c5739fe7-7aac-41f4-aa85-9775badbde2f'
 
 
 var db = mysql.createConnection({
@@ -127,9 +127,7 @@ function summoner_info_sql_to_dict(info_players_query) {
         dict.nom_invocateur = element.nom_invocateur;
         dict.opgg = element.opgg;
         dict.lvl = element.lvl;
-        dict.elo = element.elo;
         dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
-        console.log(element.rank_ok)
         if(element.rank_ok == null) {
             dict.rank = "UNRANKED"
             dict.winrate = "UNRANKED"
@@ -137,7 +135,48 @@ function summoner_info_sql_to_dict(info_players_query) {
             dict.rank = element.rank_ok
             dict.winrate = element.winrate + " %"
         }
-        
+        dict.elo = 0
+        switch(element.tier) {
+            case 'CHALLENGER':
+                dict.elo = 2400
+                break;
+            case 'GRANDMASTER':
+                dict.elo = 2400
+                break;
+            case 'MASTER':
+                dict.elo = 2400
+                break;
+            case 'DIAMOND':
+                dict.elo = 2000
+                break;
+            case 'PLATINUM':
+                dict.elo = 1600
+                break;
+            case 'GOLD':
+                dict.elo = 1200
+                break;
+            case 'SILVER':
+                dict.elo = 800
+                break;
+            case 'BRONZE':
+                dict.elo = 400
+                break;
+            case 'IRON':
+                dict.elo = 0
+                break;
+        }
+        switch(element.rank_ok) {
+            case'III':
+                dict.elo += 100
+                break;
+            case 'II':
+                dict.elo += 200
+                break;
+            case 'I':
+                dict.elo += 300
+                break;
+        }
+        dict.elo += element.lp
         dict.tier = element.tier;
         info_players.push(dict);
     });
@@ -146,19 +185,17 @@ function summoner_info_sql_to_dict(info_players_query) {
 
 app.get('',(req,res) => {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"
+    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
     
 })
-insert_database_player_info("4es Némésis")
-
 app.get('/register',(req,res) => {
     res.render('register')
 })
-
+insert_database_player_info("4es Némésis")
 app.get('/index',(req,res) => {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"

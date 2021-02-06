@@ -18,13 +18,15 @@
 	margin: 0 auto;
 }
 
-.container_header .container {
+.container_header .container .form-button {
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
 	flex-wrap: wrap;
 }
-
+.form-button {
+	text-align: center;
+}
 .main-nav ul {
 	margin: 1em 0 0.5em;
 	text-align: center;
@@ -132,4 +134,16 @@ table.Tab_Joueur thead th:hover {
 	transform: scale(1.2);
 	font-weight: 900;
 	text-decoration: underline;
+}
+#summoner_button {
+	border: non;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+
 }
