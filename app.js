@@ -53,6 +53,9 @@ function isEmpty(obj) {
     }
     return true;
 }
+async function update_data_players() {
+    
+}
 async function get_data_outside_scope(data,summoner,opgg) {
     let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
     let query_check = await db.query(check_sql,function(err, result) {
@@ -173,13 +176,30 @@ function summoner_info_sql_to_dict(info_players_query) {
                 dict.elo += 200
                 break;
             case 'I':
-                dict.elo += 300
+                if(element.tier != "CHALLENGER" && element.tier != "GRANDMASTER" && element.tier != "MASTER") {
+                    dict.elo += 300
+                }
                 break;
         }
         dict.elo += element.lp
         dict.tier = element.tier;
         info_players.push(dict);
     });
+    return sort_players_descending(info_players);
+}
+function sort_players_descending(info_players){
+    var changed;
+    do{
+        changed = false;
+        for(var i=0; i < info_players.length-1; i++) {
+            if(info_players[i].elo < info_players[i+1].elo) {
+                var tmp = info_players[i];
+                info_players[i] = info_players[i+1];
+                info_players[i+1] = tmp;
+                changed = true;
+            }
+        }
+    } while(changed);
     return info_players;
 }
 
