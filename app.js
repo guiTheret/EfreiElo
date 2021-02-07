@@ -53,8 +53,34 @@ function isEmpty(obj) {
     }
     return true;
 }
-async function update_data_players() {
-    
+async function update_data_players(summoner) {
+    get_player_data_step1(summoner)
+    .then(response => {
+        if(response['status'] != 200 ) {
+            console.log("ERROR API " + response['status'])
+            return "error"
+        } else {
+            return response.json()
+        }
+    })   
+    .then(data => {
+        get_player_data_step2(data.id)
+        .then(response => {
+            if(response['status'] != 200 ) {
+                console.log("ERROR API " + response['status'])
+                return "error"
+            } else {
+                return response.json()
+            }
+        })
+        .then(data2 => {
+            let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
+            let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
+            let query = db.query(sql,function(err, result) {
+                if (err) throw err;
+            })
+        })
+    })
 }
 async function get_data_outside_scope(data,summoner,opgg) {
     let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
@@ -215,7 +241,7 @@ app.get('',(req,res) => {
 app.get('/register',(req,res) => {
     res.render('register')
 })
-insert_database_player_info("4es Némésis")
+update_data_players("4es GROS POISSON")
 app.get('/index',(req,res) => {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"
