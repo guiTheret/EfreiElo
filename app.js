@@ -6,9 +6,8 @@ const app = express()
 const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
-const axios = require('axios').default;
 
-const api_lol_key = 'RGAPI-c5739fe7-7aac-41f4-aa85-9775badbde2f'
+const api_lol_key = 'RGAPI-a45072a1-b545-44c5-aaf9-42d13a2a491c'
 
 
 var db = mysql.createConnection({
@@ -213,6 +212,12 @@ function summoner_info_sql_to_dict(info_players_query) {
     });
     return sort_players_descending(info_players);
 }
+function update_all_players(info_players) {
+    NbRequest = 0
+    info_players.forEach(element => {
+        console.log(element.summoner)
+    })
+}
 function sort_players_descending(info_players){
     var changed;
     do{
@@ -228,25 +233,21 @@ function sort_players_descending(info_players){
     } while(changed);
     return info_players;
 }
-
-app.get('',(req,res) => {
+function load_index(req,res) {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
     })
-    
+    return info_players;
+}
+app.get('',(req,res) => {
+    load_index(req, res)
 })
 app.get('/register',(req,res) => {
     res.render('register')
 })
-update_data_players("4es GROS POISSON")
 app.get('/index',(req,res) => {
-    let info_players = [];
-    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate FROM info_players"
-    let query = db.query(sql, (err, info_players_query, fields) => {
-        info_players = summoner_info_sql_to_dict(info_players_query)
-        res.render('index',{info_players: info_players}) 
-    })
+   load_index(req, res)
 })
