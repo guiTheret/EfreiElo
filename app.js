@@ -74,11 +74,14 @@ async function update_data_players(summoner) {
             }
         })
         .then(data2 => {
-            let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
-            let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
-            let query = db.query(sql,function(err, result) {
-                if (err) throw err;
-            })
+            if(data2 != "error") {
+                let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
+                let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
+                let query = db.query(sql,function(err, result) {
+                    if (err) throw err;
+                })
+            }
+            
         })
     })
 }
@@ -213,6 +216,12 @@ function summoner_info_sql_to_dict(info_players_query) {
     });
     return sort_players_descending(info_players);
 }
+function update_all_players(info_players) {
+    NbRequest = 0
+    info_players.forEach(element => {
+        console.log(element.summoner)
+    })
+}
 function sort_players_descending(info_players){
     var changed;
     do{
@@ -231,11 +240,9 @@ function sort_players_descending(info_players){
 function refresh_all_players(data_players) {
     console.log(data_players)
     data_players.forEach(element => {
-        setTimeout(element => {
-            update_data_players(element.nom_invocateur)
-        }, 3000);
+        update_data_players(element.nom_invocateur)
         console.log(element.nom_invocateur + " has been updated")
-        
+       
     })
 }
 function load_index(req, res) {
@@ -246,13 +253,14 @@ function load_index(req, res) {
         res.render('index',{info_players: info_players}) 
         refresh_all_players(info_players)
     })
+    return info_players;
 }
 app.get('',(req,res) => {
-    load_index(req,res)
+    load_index(req, res)
 })
 app.get('/register',(req,res) => {
     res.render('register')
 })
 app.get('/index',(req,res) => {
-    load_index(req,res)
+   load_index(req, res)
 })
