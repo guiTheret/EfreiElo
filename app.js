@@ -6,7 +6,6 @@ const app = express()
 const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
-const axios = require('axios').default;
 
 const api_lol_key = 'RGAPI-d4698cf5-fcbc-4ab9-876f-1d7bf08fcfb8'
 
