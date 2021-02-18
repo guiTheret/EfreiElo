@@ -236,9 +236,15 @@ function sort_players_descending(info_players){
     } while(changed);
     return info_players;
 }
-function refresh_all_players(data_players) {
+function sleep(ms) {
+    return new Promise(
+      resolve => setTimeout(resolve, ms)
+    );  
+  }
+async function refresh_all_players(data_players) {
     console.log(data_players)
-    data_players.forEach(element => {
+    data_players.forEach(async function (element) {
+        await sleep(3000)
         update_data_players(element.nom_invocateur)
         console.log(element.nom_invocateur + " has been updated")
        
