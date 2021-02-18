@@ -45,7 +45,6 @@
 	font-variant: normal;
 	transition: 350ms;
 	transition-property: color, letter-spacing;
-	color: red;
 }
 
 .main-nav a:hover {

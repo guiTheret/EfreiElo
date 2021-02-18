@@ -79,11 +79,17 @@ table.Tab_Joueur {
 	text-align: center;
 }
 
+table.Tab_Joueur tbody td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
 table.Tab_Joueur tbody .true td a {
 	font-size: 13px;
 	font-weight: normal;
 	text-decoration: none;
-	background-color: none;
+	background-color: #202d46;
 }
 
 table.Tab_Joueur tbody .false td a {
@@ -136,6 +142,10 @@ table.Tab_Joueur th img {
 }
 
 tr:hover td {
+	background-color: #08183b;
+}
+
+tr:hover td a {
 	background-color: #08183b;
 }
 
