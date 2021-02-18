@@ -63,6 +63,10 @@ async function update_data_players(summoner) {
         }
     })   
     .then(data => {
+        let sql = `UPDATE info_players SET lvl = '${data.summonerLevel}', icone ='${data.profileIconId}' WHERE accountID = '${data.id}'`
+        let query = db.query(sql,function (err, result) {
+            if (err) throw err;
+        })
         get_player_data_step2(data.id)
         .then(response => {
             if(response['status'] != 200 ) {
@@ -73,14 +77,13 @@ async function update_data_players(summoner) {
             }
         })
         .then(data2 => {
-            if(data2 != "error") {
+            if (!(data2 === undefined || data2.length == 0 || data2 == "error")) {
                 let winrate =  data2[0].wins / (data2[0].losses + data2[0].wins) * 100           
                 let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
                 let query = db.query(sql,function(err, result) {
                     if (err) throw err;
                 })
-            }
-            
+            }         
         })
     })
 }
@@ -266,7 +269,7 @@ app.get('',(req,res) => {
     load_index(req, res)
 })
 
-insert_database_player_info("Mouameme")
+insert_database_player_info("Zeussky")
 app.get('/register',(req,res) => {
     res.render('register')
 })
