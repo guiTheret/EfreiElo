@@ -7,6 +7,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/index.css" type="text/css">
+        <script type="text/javascript" src="https://github.com/Robebou/EfreiElo/blob/main/app.js"></script>
+        
     </head>
     <body>
         <header class="main_header">
@@ -71,14 +73,16 @@
                     <% }); %>   
                     </tbody>
                 </table>
+
+
+                    <input type = "text" id ="summoner" name = "summoner" placeholder="Nom d'invocateur">
+                    <button onclick="insert_database_player_info()">Ajouter</button>
+                    
             </div>
         <footer>
-            <form class = "form-button">
-                <input type = "text" id ="summoner" name = "summoner" placeholder="Nom d'invocateur">
-                <button id = "summoner_button">Ajouter</button>
-            </form>
+          
                 
         </footer>
-        <script src="" async defer></script>
+
     </body>
 </html>
