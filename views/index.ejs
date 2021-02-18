@@ -59,7 +59,7 @@
                     <% info_players.forEach(info_players => { %>
                         <tr class="<%=Pair%>">
                             <td> <img id="icon_summoner" src ="<%= info_players.icone%>"> </td>
-                            <td> <%= info_players.nom_invocateur%></td>
+                            <td><a  href="https://euw.op.gg/summoner/userName=<%= info_players.nom_invocateur%>"><%= info_players.nom_invocateur%> </a> </td>
                             <td> <%= info_players.lvl%> </td>
                             <td> <%= info_players.tier %> 
                                 <% if (info_players.tier != "MASTER" && info_players.tier != "GRANDMASTER" && info_players.tier != "CHALLENGER") { %>

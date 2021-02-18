@@ -79,6 +79,20 @@ table.Tab_Joueur {
 	text-align: center;
 }
 
+table.Tab_Joueur tbody .true td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: none;
+}
+
+table.Tab_Joueur tbody .false td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: none;
+}
+
 .true td {
 	background-color: #202d46;
 }
