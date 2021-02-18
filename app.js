@@ -45,6 +45,19 @@ async function get_player_data_step2(encryptedID) {
     const response = await fetch(`https://euw1.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedID}?api_key=${api_lol_key}`)
     return response
 }
+function soloq_over_flex(data) {
+    if(data[0] === undefined || data[0].length == 0 ||data[0] == "error") {
+        return 'error'
+    } else {
+        if(data[0].queueType == "RANKED_SOLO_5x5") {
+            return 0
+        } else if (data[1] === undefined || data[1].length == 0 || data[1] == "error") {
+            return "error"
+        } else {
+            return 1
+        }
+    }
+}
 function isEmpty(obj) {
     for(var prop in obj) {
         if(obj.hasOwnProperty(prop))
@@ -77,13 +90,16 @@ async function update_data_players(summoner) {
             }
         })
         .then(data2 => {
-            if (!(data2 === undefined || data2.length == 0 || data2 == "error")) {
-                let winrate =  data2[0].wins / (data2[0].losses + data2[0].wins) * 100           
-                let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
+            let i = soloq_over_flex(data2)
+    
+            if(i != "error") {
+                let winrate =  data2[i].wins / (data2[i].losses + data2[i].wins) * 100           
+                let sql =` UPDATE info_players SET tier = '${data2[i].tier}', rank_ok = '${data2[i].rank}', lp = ${data2[i].leaguePoints}, wins = ${data2[i].wins}, looses = ${data2[i].losses}, winrate = ${winrate} WHERE accountID = '${data2[i].summonerId}'`;
                 let query = db.query(sql,function(err, result) {
                     if (err) throw err;
                 })
-            }         
+            }
+                     
         })
     })
 }
@@ -115,8 +131,9 @@ async function get_data_outside_scope(data,summoner,opgg) {
     .then(data => {
         //console.log(data)
         if(data != "error" && isEmpty(data) == false) {
-            let winrate = data[0].wins / (data[0].losses + data[0].wins) * 100
-            let sql =` UPDATE info_players SET tier = '${data[0].tier}', rank_ok = '${data[0].rank}', lp = ${data[0].leaguePoints}, wins = ${data[0].wins}, looses = ${data[0].losses}, winrate = ${winrate} WHERE accountID = '${data[0].summonerId}'`;
+            let i = soloq_over_flex(data)
+            let winrate = data[i].wins / (data[i].losses + data[i].wins) * 100
+            let sql =` UPDATE info_players SET tier = '${data[i].tier}', rank_ok = '${data[i].rank}', lp = ${data[i].leaguePoints}, wins = ${data[i].wins}, looses = ${data[i].losses}, winrate = ${winrate} WHERE accountID = '${data[i].summonerId}'`;
             let query = db.query(sql, function(err, result) {
                 if (err) throw err;
             })
@@ -251,7 +268,7 @@ async function refresh_all_players(data_players) {
         setTimeout(() => {
             update_data_players(element.nom_invocateur)
                 console.log(element.nom_invocateur + " has been updated")
-          }, i * 1000);
+          }, i * 5000);
        
     })
 }
