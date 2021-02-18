@@ -1,5 +1,5 @@
 // imports
-const { info } = require('console')
+const { info, Console } = require('console')
 const { response } = require('express')
 const express = require('express')
 const app = express()
@@ -7,7 +7,7 @@ const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
 
-const api_lol_key = 'RGAPI-a45072a1-b545-44c5-aaf9-42d13a2a491c'
+const api_lol_key = 'RGAPI-d4698cf5-fcbc-4ab9-876f-1d7bf08fcfb8'
 
 
 var db = mysql.createConnection({
@@ -73,11 +73,14 @@ async function update_data_players(summoner) {
             }
         })
         .then(data2 => {
-            let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
-            let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
-            let query = db.query(sql,function(err, result) {
-                if (err) throw err;
-            })
+            if(data2 != "error") {
+                let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
+                let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
+                let query = db.query(sql,function(err, result) {
+                    if (err) throw err;
+                })
+            }
+            
         })
     })
 }
@@ -234,12 +237,21 @@ function sort_players_descending(info_players){
     } while(changed);
     return info_players;
 }
-function load_index(req,res) {
+function refresh_all_players(data_players) {
+    console.log(data_players)
+    data_players.forEach(element => {
+        update_data_players(element.nom_invocateur)
+        console.log(element.nom_invocateur + " has been updated")
+       
+    })
+}
+function load_index(req, res) {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
+        refresh_all_players(info_players)
     })
     return info_players;
 }
