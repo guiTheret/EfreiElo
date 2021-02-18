@@ -46,6 +46,13 @@
 	font-style: italic;
 	font-variant: normal;
 	text-transform: none;
+	transition: 350ms;
+	transition-property: color, letter-spacing;
+}
+
+.main-nav a:hover {
+	letter-spacing: 1px;
+	color: #00abe9;
 }
 
 @media (min-width: 960px) {
@@ -96,7 +103,7 @@ table.Tab_Joueur thead {
 	background-color: none;
 }
 table.Tab_Joueur thead th {
-	font-size: 15px;
+	font-size: 1vmax;
 	font-weight: 600;
 	color: #ffffff;
 	background-color: none;
@@ -105,7 +112,7 @@ table.Tab_Joueur tfoot {
 	background-color: none;
 }
 table.Tab_Joueur th img {
-	height: 10em;
+	height: 8em;
 	border-radius: 15%;
 }
 

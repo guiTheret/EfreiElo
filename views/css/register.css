@@ -43,7 +43,14 @@
 	text-decoration: none;
 	font-style: italic;
 	font-variant: normal;
-	text-transform: none;
+	transition: 350ms;
+	transition-property: color, letter-spacing;
+	color: red;
+}
+
+.main-nav a:hover {
+	letter-spacing: 3px;
+	color: #00abe9;
 }
 
 @media (min-width: 960px) {
