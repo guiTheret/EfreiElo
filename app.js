@@ -91,7 +91,6 @@ async function update_data_players(summoner) {
         })
         .then(data2 => {
             let i = soloq_over_flex(data2)
-    
             if(i != "error") {
                 let winrate =  data2[i].wins / (data2[i].losses + data2[i].wins) * 100           
                 let sql =` UPDATE info_players SET tier = '${data2[i].tier}', rank_ok = '${data2[i].rank}', lp = ${data2[i].leaguePoints}, wins = ${data2[i].wins}, looses = ${data2[i].losses}, winrate = ${winrate} WHERE accountID = '${data2[i].summonerId}'`;
@@ -103,7 +102,7 @@ async function update_data_players(summoner) {
         })
     })
 }
-async function get_data_outside_scope(data,summoner,opgg) {
+async function get_data_outside_scope(data,summoner) {
     let check_sql = `SELECT nom_invocateur FROM info_players WHERE nom_invocateur = '${summoner}'`;
     let query_check = await db.query(check_sql,function(err, result) {
         if (err) throw err;
@@ -111,7 +110,7 @@ async function get_data_outside_scope(data,summoner,opgg) {
             console.log("USER " + summoner + " ALREADY EXISTS");
         } else {
             console.log(data)
-            let sql = `INSERT INTO info_players (nom_invocateur,opgg,accountID,icone,lvl) VALUES ('${summoner}','${opgg}','${data.id}','${data.profileIconId}','${data.summonerLevel}')`;
+            let sql = `INSERT INTO info_players (nom_invocateur,accountID,icone,lvl) VALUES ('${summoner}','${data.id}','${data.profileIconId}','${data.summonerLevel}')`;
             let query = db.query(sql, function (err,result) {
                 if (err) throw err;
                 console.log("User " + summoner + " was inserted in database");
@@ -142,7 +141,7 @@ async function get_data_outside_scope(data,summoner,opgg) {
         
     })
 }
-async function insert_database_player_info(summoner,opgg) {
+async function insert_database_player_info(summoner) {
     await get_player_data_step1(summoner)
     .then(response =>  {
         if(response['status'] != 200) {
@@ -155,7 +154,7 @@ async function insert_database_player_info(summoner,opgg) {
     })  
     .then(data => {
         if(data != "error") {
-            get_data_outside_scope(data,summoner,opgg)
+            get_data_outside_scope(data,summoner)
         }
         
     }) 
@@ -171,13 +170,11 @@ function summoner_info_sql_to_dict(info_players_query) {
             lvl: "",
             icone: "",
             elo: "",
-            opgg: "",
             rank: "",
             tier: "",
             winrate: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
-        dict.opgg = element.opgg;
         dict.lvl = element.lvl;
         dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
         if(element.rank_ok == null) {
@@ -274,7 +271,7 @@ async function refresh_all_players(data_players) {
 }
 function load_index(req, res) {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,opgg,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
+    let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
