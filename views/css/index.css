@@ -135,6 +135,7 @@ table.Tab_Joueur thead th:hover {
 	font-weight: 900;
 	text-decoration: underline;
 }
+
 #summoner_button {
 	border: non;
 	color: white;
@@ -145,5 +146,4 @@ table.Tab_Joueur thead th:hover {
 	font-size: 16px;
 	margin: 4px 2px;
 	cursor: pointer;
-
 }

@@ -122,6 +122,7 @@ async function get_data_outside_scope(data,summoner,opgg) {
     })
 }
 async function insert_database_player_info(summoner,opgg) {
+    alert("salut pd");
     await get_player_data_step1(summoner)
     .then(response =>  {
         if(response['status'] != 200) {

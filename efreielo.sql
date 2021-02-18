@@ -19,7 +19,7 @@ USE `efreielo`;
 -- Listage de la structure de la table efreielo. info_players
 CREATE TABLE IF NOT EXISTS `info_players` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom_invocateur` char(50) DEFAULT NULL,
+  `nom_invocateur` char(50) DEFAULT NULL,info_players
   `opgg` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `lvl` text,
   `elo` text,
