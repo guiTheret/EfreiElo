@@ -261,6 +261,9 @@ app.get('',(req,res) => {
 app.get('/register',(req,res) => {
     res.render('register')
 })
+app.get('/404',(req,res) => {
+    res.render('404')
+})
 app.get('/index',(req,res) => {
    load_index(req, res)
 })
