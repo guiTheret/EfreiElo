@@ -7,7 +7,7 @@ const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
 
-const api_lol_key = 'RGAPI-d4698cf5-fcbc-4ab9-876f-1d7bf08fcfb8'
+const api_lol_key = ' RGAPI-9bf99511-c90f-425c-bdf6-afc1f4db2d93'
 
 
 var db = mysql.createConnection({
@@ -74,7 +74,7 @@ async function update_data_players(summoner) {
         })
         .then(data2 => {
             if(data2 != "error") {
-                let winrate = data2[0].wins / (data2[0].losses + data2[0].wins) * 100
+                let winrate =  data2[0].wins / (data2[0].losses + data2[0].wins) * 100           
                 let sql =` UPDATE info_players SET tier = '${data2[0].tier}', rank_ok = '${data2[0].rank}', lp = ${data2[0].leaguePoints}, wins = ${data2[0].wins}, looses = ${data2[0].losses}, winrate = ${winrate} WHERE accountID = '${data2[0].summonerId}'`;
                 let query = db.query(sql,function(err, result) {
                     if (err) throw err;
@@ -91,6 +91,7 @@ async function get_data_outside_scope(data,summoner,opgg) {
         if (result != "") {
             console.log("USER " + summoner + " ALREADY EXISTS");
         } else {
+            console.log(data)
             let sql = `INSERT INTO info_players (nom_invocateur,opgg,accountID,icone,lvl) VALUES ('${summoner}','${opgg}','${data.id}','${data.profileIconId}','${data.summonerLevel}')`;
             let query = db.query(sql, function (err,result) {
                 if (err) throw err;
@@ -122,7 +123,6 @@ async function get_data_outside_scope(data,summoner,opgg) {
     })
 }
 async function insert_database_player_info(summoner,opgg) {
-    alert("salut pd");
     await get_player_data_step1(summoner)
     .then(response =>  {
         if(response['status'] != 200) {
@@ -243,11 +243,12 @@ function sleep(ms) {
     );  
   }
 async function refresh_all_players(data_players) {
-    console.log(data_players)
-    data_players.forEach(async function (element) {
-        await sleep(3000)
-        update_data_players(element.nom_invocateur)
-        console.log(element.nom_invocateur + " has been updated")
+    //console.log(data_players)
+    data_players.forEach((element,i) => {   
+        setTimeout(() => {
+            update_data_players(element.nom_invocateur)
+                console.log(element.nom_invocateur + " has been updated")
+          }, i * 1000);
        
     })
 }
@@ -264,6 +265,8 @@ function load_index(req, res) {
 app.get('',(req,res) => {
     load_index(req, res)
 })
+
+insert_database_player_info("Mouameme")
 app.get('/register',(req,res) => {
     res.render('register')
 })

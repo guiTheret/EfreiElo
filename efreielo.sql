@@ -19,7 +19,7 @@ USE `efreielo`;
 -- Listage de la structure de la table efreielo. info_players
 CREATE TABLE IF NOT EXISTS `info_players` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `nom_invocateur` char(50) DEFAULT NULL,info_players
+  `nom_invocateur` char(50) DEFAULT NULL,
   `opgg` char(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `lvl` text,
   `elo` text,
@@ -32,24 +32,17 @@ CREATE TABLE IF NOT EXISTS `info_players` (
   `winrate` int DEFAULT NULL,
   `rank_ok` char(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table efreielo.info_players : ~4 rows (environ)
+-- Listage des données de la table efreielo.info_players : ~14 rows (environ)
 /*!40000 ALTER TABLE `info_players` DISABLE KEYS */;
 INSERT INTO `info_players` (`id`, `nom_invocateur`, `opgg`, `lvl`, `elo`, `icone`, `accountID`, `tier`, `wins`, `lp`, `looses`, `winrate`, `rank_ok`) VALUES
-	(12, '4es Nemesis', 'undefined', '149', NULL, '50', 'V9Mo7548leNb7HLax_5ZhnmLYG08cCODjJxkWzNOBk4lHFk', 'DIAMOND', 8, 75, 8, 50, 'II'),
-	(16, 'LeManguier', 'undefined', '57', NULL, '4568', 'NrD7bD_xNKogo8dfTr0ONlR__YWlSkJ71TL_0Z_Sxu5p7gm1', 'PLATINUM', 31, 35, 31, 50, 'I'),
-	(17, 'ADC clash dm me', 'undefined', '432', NULL, '3456', 'yhcy4sa6rQACoh_YEhV8gnsOm8ssFTFMMQI3ilY_hJxOlMU', 'DIAMOND', 74, 6, 64, 54, 'I'),
-	(18, 'Mateleo', 'undefined', '138', NULL, '21', 'w5ZVao6pYeJdorEnstV4n577f0Tjxxakd5etAWSYiq7fRyv2', 'GOLD', 26, 53, 20, 57, 'IV'),
-	(19, 'Doctor weed', 'undefined', '280', NULL, '4834', 'BwA-i_Atw_4_h56Kj36fLSnAO4t6Jbm-ZqdmrHdtXQMsVGk', 'DIAMOND', 36, 43, 39, 48, 'II'),
-	(20, 'Boosting4Mcdo', 'undefined', '85', NULL, '3808', 'KRiynMk_56jMDMHYQmvZhmOiU-fPs0pz2_3COmWUP4k4n6VW', 'DIAMOND', 65, 17, 53, 55, 'III'),
-	(21, 'Turdyo', 'undefined', '211', NULL, '691', 'tBa5mUhsNORX6mDy92ChRnz167k5wPt3RN2xq006ksIVEbQ', 'PLATINUM', 6, 21, 6, 50, 'I'),
-	(22, 'Hoosp', 'undefined', '224', NULL, '4820', '5ctwk32Lk1-iiNRo1YfcE-u7Yc2VFo0tI48XTqApDv7vkow', 'SILVER', 10, 3, 5, 67, 'II'),
-	(23, '4es Cleaver', 'undefined', '239', NULL, '4061', 'aSdOpK4wwiYxKxm9llGsdfIJxSpfvkAzTj2lD-AuEeqqdw0', NULL, NULL, NULL, NULL, NULL, NULL),
-	(24, 'Bluplip', 'undefined', '152', NULL, '4787', 'Meip8PEex1y488fIdp1ev71N_rOTLMLPmnYROLGuYNWzrgc', 'GOLD', 7, 75, 11, 39, 'II'),
-	(25, 'u are all insane', 'undefined', '192', NULL, '29', 'BKmyTZXWDX5Tu59nCBI3VzKXyhxvWCaIX19dD9KnKlJtiwKV', 'DIAMOND', 60, 80, 55, 52, 'II'),
-	(26, '4es Goop', 'undefined', '147', NULL, '6', '7m_ds8wSAmp2M-xKzbmuFaAMEttcdgvHiIqB3-TDc0rEio0', 'DIAMOND', 18, 49, 17, 51, 'I'),
-	(27, '4es GROS POISSON', 'undefined', '430', NULL, '4834', 'KMHExwuGazSLPYSnt5KuUoUZx1PI4HxFgjWkfBmu25_LZ_w', 'DIAMOND', 23, 75, 31, 43, 'II');
+	(36, 'elecsat', 'undefined', '249', NULL, '3366', 'Nkpue2S9fjYDMvQ2hvyhFGdz9ZkMPzIRQBfDVF2r-mxygRA', 'GOLD', 30, 39, 31, 49, 'II'),
+	(38, '4es Némésis', 'undefined', '220', NULL, '1211', 'u4j6pp59AJeZG1CfMLN35mClMAeU1zwwcD9pf_L8Wplwi-Y', 'MASTER', 39, 84, 32, 55, 'I'),
+	(39, 'LoulouLaZoulette', 'undefined', '277', NULL, '539', '5DOwhcdkLotRmCOmlwUH3nKMmrbCEInKPjbIjTm7uBxErII', 'PLATINUM', 33, 98, 31, 52, 'III'),
+	(40, '4es Goop', 'undefined', '149', NULL, '6', 'wBk-2p5eCjYBZSbB082ud2DxqrcHwxuhaT7ptR68MezoQKU', 'DIAMOND', 26, 0, 27, 49, 'I'),
+	(41, 'Manguier', 'undefined', '166', NULL, '4497', '8jf46wKRF49U_DogoQSIecn6O3yqAxWyYYt_1VZ4rCmcULQ', 'PLATINUM', 18, 94, 18, 50, 'I'),
+	(42, 'Mouameme', 'undefined', '335', NULL, '4217', 'r0hGhpJTEvmTyDkCCHrVnVabmrxciTQ6qy-jjjQl4Cb1D0E', 'PLATINUM', 20, 58, 21, 49, 'II');
 /*!40000 ALTER TABLE `info_players` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
