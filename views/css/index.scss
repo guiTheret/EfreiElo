@@ -1,0 +1,287 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
+$darkblue: #131c2e;
+$lightblue: #202d46;
+$purple: #62148d;
+
+* {
+	background-color: $darkblue;
+	color: white;
+}
+
+#logo_image {
+	position: absolute;
+	top: 1em;
+	left: 2em;
+	max-width: 350px;
+	height: auto;
+}
+
+.container_header {
+	width: 960px;
+	max-width: 100%;
+	padding: 20px;
+	margin: 0 auto;
+}
+
+.container_header .container .form-button {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.form-button {
+	text-align: center;
+}
+.main-nav ul {
+	margin: 1em 0 0.5em;
+	text-align: center;
+}
+.main-nav li {
+	display: inline;
+}
+.main-nav a {
+	display: inline-block;
+	padding: 0.5em 1.5em;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 25px;
+	letter-spacing: -0.4px;
+	word-spacing: 2px;
+	font-weight: 700;
+	text-decoration: none;
+	font-style: italic;
+	font-variant: normal;
+	text-transform: none;
+	transition: 350ms;
+	transition-property: color, letter-spacing;
+}
+
+.main-nav a:hover {
+	letter-spacing: 1px;
+	color: #00abe9;
+}
+
+@media (min-width: 960px) {
+	.container_header .container {
+		justify-content: space-between;
+	}
+}
+
+#Container_Tab {
+	position: relative;
+	width: 70%;
+	top: 14%;
+	left: 15%;
+	right: 15%;
+}
+
+table.Tab_Joueur {
+	font-family: Tahoma, Geneva, sans-serif;
+	background-color: #202b43;
+	padding: 30px 30px 30px 30px;
+	border: 2px solid $purple;
+	border-radius: 3%;
+	width: 100%;
+	text-align: center;
+}
+
+table.Tab_Joueur tbody td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+table.Tab_Joueur tbody .true td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: #202d46;
+}
+
+table.Tab_Joueur tbody .false td a {
+	font-size: 13px;
+	font-weight: normal;
+	text-decoration: none;
+	background-color: none;
+}
+
+.true td {
+	background-color: $lightblue;
+}
+
+.false td {
+	background-color: $darkblue;
+}
+
+table.Tab_Joueur td,
+table.Tab_Joueur th {
+	background-color: none;
+	border: none;
+	padding: 3px 3px;
+}
+
+table.Tab_Joueur tbody td {
+	font-size: 13px;
+	font-weight: normal;
+}
+
+table.Tab_Joueur thead {
+	background-color: none;
+}
+table.Tab_Joueur thead th {
+	font-size: 1vmax;
+	font-weight: 600;
+	color: #ffffff;
+	background-color: none;
+}
+table.Tab_Joueur tfoot {
+	background-color: none;
+}
+table.Tab_Joueur th img {
+	height: 8em;
+	border-radius: 15%;
+}
+
+#icon_summoner {
+	height: 5em;
+	border-radius: 15%;
+}
+
+tr:hover td {
+	background-color: #08183b;
+}
+
+tr:hover td a {
+	background-color: #08183b;
+}
+
+table.Tab_Joueur td {
+	transition: all 0.2s ease-in-out;
+}
+
+table.Tab_Joueur td:hover {
+	transform: scale(1.1);
+}
+
+table.Tab_Joueur thead th {
+	transition: all 0.2s ease-in-out;
+	cursor: url('../../ressource/image/FuckRobebou.png'), pointer;
+}
+table.Tab_Joueur thead th:hover {
+	transform: scale(1.2);
+	font-weight: 900;
+	text-decoration: underline;
+}
+
+#summoner_button {
+	border: non;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+}
+
+// Inscription Button
+
+.form__group {
+	position: relative;
+	padding: 15px 0 0;
+	margin-top: 10px;
+	width: 22%;
+	margin: 0% 39% 5% 39%;
+}
+
+.form__field {
+	font-family: inherit;
+	width: 100%;
+	border: 0;
+	border-bottom: 2px solid $gray;
+	outline: 0;
+	font-size: 1.3rem;
+	color: $white;
+	padding: 7px 0;
+	background: transparent;
+	transition: border-color 0.2s;
+
+	&::placeholder {
+		color: transparent;
+	}
+
+	&:placeholder-shown ~ .form__label {
+		font-size: 1.3rem;
+		cursor: text;
+		top: 20px;
+	}
+}
+
+.form__label {
+	position: absolute;
+	top: 0;
+	display: block;
+	transition: 0.2s;
+	font-size: 1rem;
+	color: $gray;
+}
+
+.form__field:focus {
+	~ .form__label {
+		position: absolute;
+		top: 0;
+		display: block;
+		transition: 0.2s;
+		font-size: 1rem;
+		color: $primary;
+		font-weight: 700;
+	}
+	padding-bottom: 6px;
+	font-weight: 700;
+	border-width: 3px;
+	border-image: linear-gradient(to right, $primary, $secondary);
+	border-image-slice: 1;
+}
+/* reset input */
+.form__field {
+	&:required,
+	&:invalid {
+		box-shadow: none;
+	}
+}
+
+#redirection {
+	border: 2px solid $gray;
+	margin: 25% 25% 0% 25%;
+	padding: 3% 3% 3% 3%;
+	background-color: $lightblue;
+	text-align: center;
+	#compt {
+		background-color: inherit;
+		color: red;
+	}
+}
+
+#validate {
+	margin: 1% 0% 0% 48%;
+	width: 8%;
+	display: inline-block;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 2vmin;
+	letter-spacing: -0.1px;
+	word-spacing: 2px;
+	font-weight: 700;
+	text-decoration: none;
+	font-variant: normal;
+	text-transform: none;
+	transition: 350ms;
+	transition-property: color, letter-spacing;
+}
+
+#validate:hover {
+	letter-spacing: 1px;
+	color: #00abe9;
+}
