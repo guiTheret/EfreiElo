@@ -29,7 +29,7 @@
                         <li>
                             <a href="/404">Pari eSportif</a>
                         </li>
-                    </ul>
+                    </ul>   
                 </nav>
             </span>
         </header>
@@ -74,9 +74,11 @@
                     </tbody>
                 </table>
 
-
-                    <input type = "text" id ="summoner" name = "summoner" placeholder="Nom d'invocateur">
-                    <button onclick="insert_database_player_info()">Ajouter</button>
+                    <form action = "/addplayer" method = "post" >
+                        <input type = "text" id ="summoner" name = "summoner" placeholder="Nom d'invocateur">
+                        <button type= "submit">Ajouter</button>
+                    </form>
+                    
                     
             </div>
         <footer>

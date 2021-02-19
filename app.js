@@ -6,6 +6,12 @@ const app = express()
 const port = 1234
 const mysql = require('mysql')
 const fetch = require("node-fetch")
+const { cpuUsage } = require('process')
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 const api_lol_key = ' RGAPI-9bf99511-c90f-425c-bdf6-afc1f4db2d93'
 
@@ -283,7 +289,6 @@ app.get('',(req,res) => {
     load_index(req, res)
 })
 
-insert_database_player_info("Zeussky")
 app.get('/register',(req,res) => {
     res.render('register')
 })
@@ -292,4 +297,9 @@ app.get('/404',(req,res) => {
 })
 app.get('/index',(req,res) => {
    load_index(req, res)
+})
+app.post('/addplayer', (req, res) => {
+    var summoner = req.body.summoner
+    insert_database_player_info(summoner)
+    res.render('registered',{summoner: summoner})
 })
