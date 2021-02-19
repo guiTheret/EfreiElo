@@ -301,8 +301,20 @@ app.get('/404',(req,res) => {
 app.get('/index',(req,res) => {
    load_index(req, res)
 })
-app.post('/addplayer', (req, res) => {
+app.get('/admin',(req,res) => {
+    res.render('admin')
+ })
+ app.get('/add_player',(req,res) => {
+    res.render('add_player')
+ })
+
+app.post('/add_player', (req, res) => {
     var summoner = req.body.summoner
     insert_database_player_info(summoner)
-    res.render('registered',{summoner: summoner})
+    /* If error then inform add_player.ejs
+    var result = insert_database_player_info(summoner)
+    if (result==='error'){
+        res.render('add_player',{summoner: 'invalid'})
+    }*/ 
+    res.render('add_player',{summoner: summoner})
 })
