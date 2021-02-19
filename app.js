@@ -277,7 +277,7 @@ async function refresh_all_players(data_players) {
           }, i * 5000);
        
     })
-    },60000**60*2) // refresh de tous les joueurs tous les 2h
+    },60000**60*2) // refresh de tous les joueurs toutes les 2h
 }
 function load_index(req, res) {
     let info_players = [];
