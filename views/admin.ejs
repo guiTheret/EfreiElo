@@ -43,23 +43,12 @@
                     <tfoot>
                     </tfoot>
                     <tbody>
-
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
+                        <% info_players.forEach(element => { %>
+                            <tr>
+                                <td><a  href="https://euw.op.gg/summoner/userName=<%= element.nom_invocateur%>" target="_blank"><%=element.nom_invocateur%></a></td>
+                                <td><button>Valider</button> <button>Supprimer</button></td>
+                            </tr>
+                        <%})%>
                     </tbody>
                     
                 </table>

@@ -168,8 +168,8 @@ async function insert_database_player_info(summoner) {
 function encode_using_utf8(summoner) {   
     return encodeURI(summoner)
 }
-function summoner_info_sql_to_dict(info_players_query) {
-    var info_players = []
+function summoner_info_sql_to_dict(info_players_query,case_dict) {
+    var info_players = [];
     info_players_query.forEach(element => {
         var dict = {
             nom_invocateur: "",
@@ -182,61 +182,63 @@ function summoner_info_sql_to_dict(info_players_query) {
             winrate: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
-        dict.lvl = element.lvl;
-        dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
-        if(element.rank_ok == null) {
-            dict.rank = "UNRANKED"
-            dict.winrate = "UNRANKED"
-        } else {
-            dict.rank = element.rank_ok
-            dict.winrate = element.winrate + " %"
+        if(case_dict == 1) {
+            dict.lvl = element.lvl;
+            dict.icone = `http://ddragon.leagueoflegends.com/cdn/11.3.1/img/profileicon/${element.icone}.png`;
+            if(element.rank_ok == null) {
+                dict.rank = "UNRANKED"
+                dict.winrate = "UNRANKED"
+            } else {
+                dict.rank = element.rank_ok
+                dict.winrate = element.winrate + " %"
+            }
+            dict.elo = 0
+            switch(element.tier) {
+                case 'CHALLENGER':
+                    dict.elo = 2400
+                    break;
+                case 'GRANDMASTER':
+                    dict.elo = 2400
+                    break;
+                case 'MASTER':
+                    dict.elo = 2400
+                    break;
+                case 'DIAMOND':
+                    dict.elo = 2000
+                    break;
+                case 'PLATINUM':
+                    dict.elo = 1600
+                    break;
+                case 'GOLD':
+                    dict.elo = 1200
+                    break;
+                case 'SILVER':
+                    dict.elo = 800
+                    break;
+                case 'BRONZE':
+                    dict.elo = 400
+                    break;
+                case 'IRON':
+                    dict.elo = 0
+                    break;
+            }
+            switch(element.rank_ok) {
+                case'III':
+                    dict.elo += 100
+                    break;
+                case 'II':
+                    dict.elo += 200
+                    break;
+                case 'I':
+                    if(element.tier != "CHALLENGER" && element.tier != "GRANDMASTER" && element.tier != "MASTER") {
+                        dict.elo += 300
+                    }
+                    break;
+            }
+            dict.elo += element.lp
+            dict.lp = element.lp
+            dict.tier = element.tier;
         }
-        dict.elo = 0
-        switch(element.tier) {
-            case 'CHALLENGER':
-                dict.elo = 2400
-                break;
-            case 'GRANDMASTER':
-                dict.elo = 2400
-                break;
-            case 'MASTER':
-                dict.elo = 2400
-                break;
-            case 'DIAMOND':
-                dict.elo = 2000
-                break;
-            case 'PLATINUM':
-                dict.elo = 1600
-                break;
-            case 'GOLD':
-                dict.elo = 1200
-                break;
-            case 'SILVER':
-                dict.elo = 800
-                break;
-            case 'BRONZE':
-                dict.elo = 400
-                break;
-            case 'IRON':
-                dict.elo = 0
-                break;
-        }
-        switch(element.rank_ok) {
-            case'III':
-                dict.elo += 100
-                break;
-            case 'II':
-                dict.elo += 200
-                break;
-            case 'I':
-                if(element.tier != "CHALLENGER" && element.tier != "GRANDMASTER" && element.tier != "MASTER") {
-                    dict.elo += 300
-                }
-                break;
-        }
-        dict.elo += element.lp
-        dict.lp = element.lp
-        dict.tier = element.tier;
         info_players.push(dict);
     });
     return sort_players_descending(info_players);
@@ -278,10 +280,19 @@ function load_index(req, res) {
     let info_players = [];
     let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players WHERE validated = 1"
     let query = db.query(sql, (err, info_players_query, fields) => {
-        info_players = summoner_info_sql_to_dict(info_players_query)
+        info_players = summoner_info_sql_to_dict(info_players_query,1)
         res.render('index',{info_players: info_players}) 
     })
     return info_players;
+}
+function load_non_validated(req,res) {
+    let info_players = [];
+    let sql = "SELECT nom_invocateur FROM info_players WHERE validated = 0"
+    let query = db.query(sql,(err,info_players_query, fields) => {
+        console.log(info_players_query)
+        info_players = summoner_info_sql_to_dict(info_players_query,2)
+        res.render('admin',{info_players: info_players})
+    })
 }
 function validate_summoner(summoner) {
     let sql = `UPDATE info_players SET validated = '1' WHERE nom_invocateur = '${summoner}'`
@@ -309,7 +320,7 @@ app.get('/index',(req,res) => {
    load_index(req, res)
 })
 app.get('/admin',(req,res) => {
-    res.render('admin')
+    load_non_validated(req, res)
  })
  app.get('/add_player',(req,res) => {
     res.render('add_player')
