@@ -1,180 +1,284 @@
 * {
-	background-color: #131c2e;
-	color: white;
+  background-color: #131c2e;
+  color: white;
 }
 
 #logo_image {
-	position: absolute;
-	top: 1em;
-	left: 2em;
-	max-width: 350px;
-	height: auto;
+  position: absolute;
+  top: 1em;
+  left: 2em;
+  max-width: 350px;
+  height: auto;
 }
 
 .container_header {
-	width: 960px;
-	max-width: 100%;
-	padding: 20px;
-	margin: 0 auto;
+  width: 960px;
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
 }
 
 .container_header .container .form-button {
-	display: flex;
-	align-items: center;
-	justify-content: space-around;
-	flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
+
 .form-button {
-	text-align: center;
+  text-align: center;
 }
+
 .main-nav ul {
-	margin: 1em 0 0.5em;
-	text-align: center;
+  margin: 1em 0 0.5em;
+  text-align: center;
 }
+
 .main-nav li {
-	display: inline;
+  display: inline;
 }
+
 .main-nav a {
-	display: inline-block;
-	padding: 0.5em 1.5em;
-	font-family: Tahoma, Geneva, sans-serif;
-	font-size: 25px;
-	letter-spacing: -0.4px;
-	word-spacing: 2px;
-	font-weight: 700;
-	text-decoration: none;
-	font-style: italic;
-	font-variant: normal;
-	text-transform: none;
-	transition: 350ms;
-	transition-property: color, letter-spacing;
+  display: inline-block;
+  padding: 0.5em 1.5em;
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 25px;
+  letter-spacing: -0.4px;
+  word-spacing: 2px;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: italic;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-transition: 350ms;
+  transition: 350ms;
+  -webkit-transition-property: color, letter-spacing;
+  transition-property: color, letter-spacing;
 }
 
 .main-nav a:hover {
-	letter-spacing: 1px;
-	color: #00abe9;
+  letter-spacing: 1px;
+  color: #00abe9;
 }
 
 @media (min-width: 960px) {
-	.container_header .container {
-		justify-content: space-between;
-	}
+  .container_header .container {
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
 }
 
 #Container_Tab {
-	position: relative;
-	width: 70%;
-	top: 14%;
-	left: 15%;
-	right: 15%;
+  position: relative;
+  width: 70%;
+  top: 14%;
+  left: 15%;
+  right: 15%;
 }
 
 table.Tab_Joueur {
-	font-family: Tahoma, Geneva, sans-serif;
-	background-color: #202b43;
-	padding: 30px 30px 30px 30px;
-	border: 2px solid #62148d;
-	border-radius: 3%;
-	width: 100%;
-	text-align: center;
+  font-family: Tahoma, Geneva, sans-serif;
+  background-color: #202b43;
+  padding: 30px 30px 30px 30px;
+  border: 2px solid #62148d;
+  border-radius: 3%;
+  width: 100%;
+  text-align: center;
 }
 
 table.Tab_Joueur tbody td a {
-	font-size: 13px;
-	font-weight: normal;
-	text-decoration: none;
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
 }
 
 table.Tab_Joueur tbody .true td a {
-	font-size: 13px;
-	font-weight: normal;
-	text-decoration: none;
-	background-color: #202d46;
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: #202d46;
 }
 
 table.Tab_Joueur tbody .false td a {
-	font-size: 13px;
-	font-weight: normal;
-	text-decoration: none;
-	background-color: none;
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
+  background-color: none;
 }
 
 .true td {
-	background-color: #202d46;
+  background-color: #202d46;
 }
 
 .false td {
-	background-color: #131c2e;
+  background-color: #131c2e;
 }
 
 table.Tab_Joueur td,
 table.Tab_Joueur th {
-	background-color: none;
-	border: none;
-	padding: 3px 3px;
+  background-color: none;
+  border: none;
+  padding: 3px 3px;
 }
 
 table.Tab_Joueur tbody td {
-	font-size: 13px;
-	font-weight: normal;
+  font-size: 13px;
+  font-weight: normal;
 }
 
 table.Tab_Joueur thead {
-	background-color: none;
+  background-color: none;
 }
+
 table.Tab_Joueur thead th {
-	font-size: 1vmax;
-	font-weight: 600;
-	color: #ffffff;
-	background-color: none;
+  font-size: 1vmax;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: none;
 }
+
 table.Tab_Joueur tfoot {
-	background-color: none;
+  background-color: none;
 }
+
 table.Tab_Joueur th img {
-	height: 8em;
-	border-radius: 15%;
+  height: 8em;
+  border-radius: 15%;
 }
 
 #icon_summoner {
-	height: 5em;
-	border-radius: 15%;
+  height: 5em;
+  border-radius: 15%;
 }
 
 tr:hover td {
-	background-color: #08183b;
+  background-color: #08183b;
 }
 
 tr:hover td a {
-	background-color: #08183b;
+  background-color: #08183b;
 }
 
 table.Tab_Joueur td {
-	transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 table.Tab_Joueur td:hover {
-	transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
 }
 
 table.Tab_Joueur thead th {
-	transition: all 0.2s ease-in-out;
-	cursor: url('../../ressource/image/FuckRobebou.png'), pointer;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  cursor: url("../../ressource/image/FuckRobebou.png"), pointer;
 }
+
 table.Tab_Joueur thead th:hover {
-	transform: scale(1.2);
-	font-weight: 900;
-	text-decoration: underline;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  font-weight: 900;
+  text-decoration: underline;
 }
 
 #summoner_button {
-	border: non;
-	color: white;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin: 4px 2px;
-	cursor: pointer;
+  border: non;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 30%;
+  margin: 0% 37% 5% 37%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  -webkit-transition: border-color 0.2s;
+  transition: border-color 0.2s;
+}
+
+.form__field::-webkit-input-placeholder {
+  color: transparent;
+}
+
+.form__field:-ms-input-placeholder {
+  color: transparent;
+}
+
+.form__field::-ms-input-placeholder {
+  color: transparent;
+}
+
+.form__field::placeholder {
+  color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  -o-border-image: linear-gradient(to right, #11998e, #38ef7d);
+     border-image: -webkit-gradient(linear, left top, right top, from(#11998e), to(#38ef7d));
+     border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #11998e;
+  font-weight: 700;
+}
+
+/* reset input */
+.form__field:required, .form__field:invalid {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+/*# sourceMappingURL=index.css.map */

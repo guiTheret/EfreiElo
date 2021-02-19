@@ -21,10 +21,7 @@
                             <a href="#">Classement par Poste</a>
                         </li>
                         <li>
-                            <a href="/404">Graphique</a>
-                        </li>
-                        <li>
-                            <a href="/register">Se Connecter</a>
+                            <a href="/404">Graphique Elo</a>
                         </li>
                         <li>
                             <a href="/404">Pari eSportif</a>
@@ -76,14 +73,16 @@
                     <% }); %>   
                     </tbody>
                 </table>
-
-                    <form action = "/addplayer" method = "post" >
-                        <input type = "text" id ="summoner" name = "summoner" placeholder="Nom d'invocateur">
-                        <button type= "submit">Ajouter</button>
-                    </form>
-                    
-                    
             </div>
+                <br><br><br>                    
+                    <div class="form__group field">
+                        <form action= "/addplayer" method = "post">
+                            <input type="text" class="form__field" placeholder="Nom d'invocateur" name="summoner" id='summoner' required />
+                            <label for="summoner" class="form__label">Nom d'invocateur à ajouter</label>
+                        </form>
+                      </div>
+                    
+           
         <footer>
           
                 
