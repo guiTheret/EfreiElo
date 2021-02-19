@@ -65,6 +65,9 @@
                                 <% if (info_players.tier != "MASTER" && info_players.tier != "GRANDMASTER" && info_players.tier != "CHALLENGER") { %>
                                     <%= info_players.rank%> 
                                 <% } %>
+                                <% if (info_players.rank != "UNRANKED") { %>
+                                    <%= info_players.lp %> LP
+                                <% } %>
                                 
                             </td>
                             <td> <%= info_players.winrate%></td>

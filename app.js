@@ -116,7 +116,7 @@ async function get_data_outside_scope(data,summoner) {
             console.log("USER " + summoner + " ALREADY EXISTS");
         } else {
             console.log(data)
-            let sql = `INSERT INTO info_players (nom_invocateur,accountID,icone,lvl) VALUES ('${summoner}','${data.id}','${data.profileIconId}','${data.summonerLevel}')`;
+            let sql = `INSERT INTO info_players (nom_invocateur,accountID,icone,lvl,validated) VALUES ('${summoner}','${data.id}','${data.profileIconId}','${data.summonerLevel}',0)`;
             let query = db.query(sql, function (err,result) {
                 if (err) throw err;
                 console.log("User " + summoner + " was inserted in database");
@@ -178,6 +178,7 @@ function summoner_info_sql_to_dict(info_players_query) {
             elo: "",
             rank: "",
             tier: "",
+            lp: "",
             winrate: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
@@ -234,6 +235,7 @@ function summoner_info_sql_to_dict(info_players_query) {
                 break;
         }
         dict.elo += element.lp
+        dict.lp = element.lp
         dict.tier = element.tier;
         info_players.push(dict);
     });
@@ -266,7 +268,8 @@ function sleep(ms) {
     );  
   }
 async function refresh_all_players(data_players) {
-    //console.log(data_players)
+    setTimeout(() => {
+        //console.log(data_players)
     data_players.forEach((element,i) => {   
         setTimeout(() => {
             update_data_players(element.nom_invocateur)
@@ -274,14 +277,14 @@ async function refresh_all_players(data_players) {
           }, i * 5000);
        
     })
+    },60000**60*2) // refresh de tous les joueurs tous les 2h
 }
 function load_index(req, res) {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players"
+    let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players WHERE validated = 1"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query)
         res.render('index',{info_players: info_players}) 
-        refresh_all_players(info_players)
     })
     return info_players;
 }
