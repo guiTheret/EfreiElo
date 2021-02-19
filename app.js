@@ -262,11 +262,6 @@ function sort_players_descending(info_players){
     } while(changed);
     return info_players;
 }
-function sleep(ms) {
-    return new Promise(
-      resolve => setTimeout(resolve, ms)
-    );  
-  }
 async function refresh_all_players(data_players) {
     setTimeout(() => {
         //console.log(data_players)
@@ -287,6 +282,18 @@ function load_index(req, res) {
         res.render('index',{info_players: info_players}) 
     })
     return info_players;
+}
+function validate_summoner(summoner) {
+    let sql = `UPDATE info_players SET validated = '1' WHERE nom_invocateur = '${summoner}'`
+    let query = db.query(sql,(err) => {
+        if (err) throw err;
+    })
+}
+function delete_sql_line(summoner) {
+    let sql =  `DELETE FROM info_players WHERE nom_invocateur '${summoner}'`
+    let query = db.query(sql,(err) => {
+        if (err) throw err;
+    })
 }
 app.get('',(req,res) => {
     load_index(req, res)
