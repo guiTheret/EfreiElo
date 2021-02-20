@@ -18,11 +18,11 @@
 <body>
 	<div id="redirection">
 		Your account, mister <%= summoner %>, needs to be validated by an admin, it takes less than 15 minutes in average <br>
-		 Redirection in <span id="compt">10 secondes</span>
+		 Redirection in <span id="compt">5 secondes</span>
 	</div>
 	<!-- Script Compteur et redirection -->
 	<script>
-		var compte = 9;
+		var compte = 4;
 			function decompte(){
 				if(compte <= 1) {
 						 pluriel = "";
@@ -34,7 +34,7 @@
 				if(compte == 0 || compte < 0) {
 					compte = 0;
 					clearInterval(timer);
-					document.location.href="redirection.html";
+					document.location.href="/index";
 				}
 			compte--;
 		}
@@ -42,7 +42,7 @@
 
 		setTimeout(function(){
 			window.history.back()
-		}, 11000);
+		}, 6000);
 	 </script>
 
 	 <!-- Script si erreur API 404 ou le profile existe déjà -->
