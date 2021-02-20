@@ -7,7 +7,38 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/index.css" type="text/css">
-        <script type="text/javascript" src="https://github.com/Robebou/EfreiElo/blob/main/app.js"></script>
+        <script>
+            
+            function validate(element) {
+                var rowId = event.target.parentNode.parentNode.id;  
+                var data =  document.getElementById(rowId).querySelectorAll(".row-data");  
+                var summoner = data[0].innerHTML
+                data = {summoner}
+                const options = {
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                }
+                fetch('/validate',options)
+
+                document.getElementById(rowId).remove()
+
+            }
+            function delete_summoner(element) {
+                var rowId = event.target.parentNode.parentNode.id;
+                var data =  document.getElementById(rowId).querySelectorAll(".row-data");  
+                var summoner = data[0].innerHTML
+                data = {summoner}
+                const options = {
+                    method: 'post',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                }
+                fetch('/delete',options)
+                
+                document.getElementById(rowId).remove()
+            }
+        </script>
         
     </head>
     <body>
@@ -43,34 +74,20 @@
                     <tfoot>
                     </tfoot>
                     <tbody>
-
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
-                        <tr>
-                            <td> NomInvoc</td>
-                            <td> <input type="radio"></td>
-                        </tr>
+                        <% compteur = 0%>
+                        <% info_players.forEach(element => { %>
+                            <tr id = "<%= compteur%>">
+                                <td><a  href="https://euw.op.gg/summoner/userName=<%= element.nom_invocateur%>" target="_blank" class = "row-data"><%=element.nom_invocateur%></a></td>
+                                <td><button onclick="validate(this)">Valider</button> 
+                                    <button onclick="delete_summoner(this)">Supprimer</button></td>
+                            </tr>
+                            <% compteur += 1%>
+                        <%})%>
                     </tbody>
                     
                 </table>
                 
-            </div>
-            <button id="validate" type="submit">
-                Valider
-            </button>
-                    
-                    
-           
+            </div>    
         <footer>
           
                 
