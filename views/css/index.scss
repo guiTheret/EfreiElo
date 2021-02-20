@@ -255,7 +255,7 @@ table.Tab_Joueur thead th:hover {
 
 #redirection {
 	border: 2px solid $gray;
-	margin: 25% 25% 0% 25%;
+	margin: 15% 25% 0% 25%;
 	padding: 3% 3% 3% 3%;
 	background-color: $lightblue;
 	text-align: center;
@@ -284,4 +284,11 @@ table.Tab_Joueur thead th:hover {
 #validate:hover {
 	letter-spacing: 1px;
 	color: #00abe9;
+}
+
+#login_form {
+	position: absolute;
+	top: 25%;
+	right: 45%;
+	left: 45%;
 }

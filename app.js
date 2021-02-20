@@ -324,6 +324,10 @@ app.get('/admin',(req,res) => {
  app.get('/add_player',(req,res) => {
     res.render('add_player')
  })
+ app.get('/login',(req,res) => {
+    res.render('login')
+ })
+
  
 app.post('/validate',(req, res) => {
     console.log(req.body.summoner + " was validated")
