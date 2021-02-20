@@ -289,7 +289,6 @@ function load_non_validated(req,res) {
     let info_players = [];
     let sql = "SELECT nom_invocateur FROM info_players WHERE validated = 0"
     let query = db.query(sql,(err,info_players_query, fields) => {
-        console.log(info_players_query)
         info_players = summoner_info_sql_to_dict(info_players_query,2)
         res.render('admin',{info_players: info_players})
     })
@@ -301,7 +300,7 @@ function validate_summoner(summoner) {
     })
 }
 function delete_sql_line(summoner) {
-    let sql =  `DELETE FROM info_players WHERE nom_invocateur '${summoner}'`
+    let sql =  `DELETE FROM info_players WHERE nom_invocateur = '${summoner}'`
     let query = db.query(sql,(err) => {
         if (err) throw err;
     })
@@ -325,6 +324,15 @@ app.get('/admin',(req,res) => {
  app.get('/add_player',(req,res) => {
     res.render('add_player')
  })
+ 
+app.post('/validate',(req, res) => {
+    console.log(req.body.summoner + " was validated")
+    validate_summoner(req.body.summoner)
+})
+app.post('/delete',(req, res) => {
+    console.log(req.body.summoner + " was deleted")
+    delete_sql_line(req.body.summoner)
+})
 
 app.post('/add_player', (req, res) => {
     var summoner = req.body.summoner
