@@ -20,9 +20,7 @@
                     body: JSON.stringify(data)
                 }
                 fetch('/validate',options)
-
                 document.getElementById(rowId).remove()
-
             }
             function delete_summoner(element) {
                 var rowId = event.target.parentNode.parentNode.id;
@@ -45,7 +43,6 @@
         <header class="main_header">
             
             <span class="container_header">
-                
                 <nav class="main-nav">
                     <ul class="main-nav-list">
                         <li>
@@ -88,9 +85,7 @@
                 </table>
                 
             </div>    
-        <footer>
-          
-                
+        <footer>         
         </footer>
 
     </body>
