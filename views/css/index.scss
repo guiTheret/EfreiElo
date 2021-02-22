@@ -287,8 +287,30 @@ table.Tab_Joueur thead th:hover {
 }
 
 #login_form {
-	position: absolute;
-	top: 25%;
-	right: 45%;
-	left: 45%;
+	width: 20%;
+	margin: 0 auto;
+	top: 15%;
+	font-size: 1vmax;
+	text-align: center;
+	padding: 1% 0% 1% 0%;
+	border-radius: 2%;
+	border: 2px solid #62148d;
+	background-color: $lightblue;
+	input {
+		width: 48%;
+	}
+	button {
+		overflow: hidden;
+		font-size: 1vmax;
+		width: 50%;
+		text-decoration: none;
+		transition: 350ms;
+		transition-property: color, letter-spacing, font-weight;
+	}
+
+	button:hover {
+		letter-spacing: 1px;
+		color: #00abe9;
+		font-weight: bold;
+	}
 }
