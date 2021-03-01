@@ -3,7 +3,7 @@ const { info, Console } = require('console')
 const { response } = require('express')
 const express = require('express')
 const app = express()
-const port = 1234
+const port = 8100
 const mysql = require('mysql')
 const fetch = require("node-fetch")
 const { cpuUsage } = require('process')
@@ -17,10 +17,10 @@ const api_lol_key = ' RGAPI-9bf99511-c90f-425c-bdf6-afc1f4db2d93'
 
 
 var db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1234",
-    database: "EfreiElo"
+    host: "mysql-robebou.alwaysdata.net",
+    user: "robebou_admin",
+    password: "EfreiElo1234!1418",
+    database: "robebou_efrei_elo",
 })
 
 db.connect(function(err) {
@@ -243,12 +243,7 @@ function summoner_info_sql_to_dict(info_players_query,case_dict) {
     });
     return sort_players_descending(info_players);
 }
-function update_all_players(info_players) {
-    NbRequest = 0
-    info_players.forEach(element => {
-        console.log(element.summoner)
-    })
-}
+
 function sort_players_descending(info_players){
     var changed;
     do{
@@ -264,17 +259,22 @@ function sort_players_descending(info_players){
     } while(changed);
     return info_players;
 }
-async function refresh_all_players(data_players) {
-    setTimeout(() => {
+async function refresh_all_players() {
+    setInterval(() => {
+        let sql = "SELECT nom_invocateur FROM info_players"
+        let query = db.query(sql,(err, data_players,fields) => {
+            if (err) throw err;
+            console.log(data_players)
+            data_players.forEach((element,i) => {   
+                setTimeout(() => {
+                    update_data_players(element.nom_invocateur)
+                        console.log(element.nom_invocateur + " has been updated")
+                    }, i * 5000);
+        })
         //console.log(data_players)
-    data_players.forEach((element,i) => {   
-        setTimeout(() => {
-            update_data_players(element.nom_invocateur)
-                console.log(element.nom_invocateur + " has been updated")
-          }, i * 5000);
-       
-    })
-    },60000**60*2) // refresh de tous les joueurs toutes les 2h
+        
+        })
+    },120*60*1000) // refresh de tous les joueurs toutes les 2h
 }
 function load_index(req, res) {
     let info_players = [];
@@ -348,3 +348,5 @@ app.post('/add_player', (req, res) => {
     }*/ 
     res.render('add_player',{summoner: summoner})
 })
+
+refresh_all_players()
