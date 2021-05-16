@@ -15,7 +15,7 @@
                 <nav class="main-nav">
                     <ul class="main-nav-list">
                         <li>
-                            <a href="#">Classement par Poste</a>
+                            <a href="/">Classement par Poste</a>
                         </li>
                         <li>
                             <a href="/404">Graphique Elo</a>
@@ -33,9 +33,10 @@
                 <table class = "Tab_Joueur">
                     <thead>
                         <tr>
+                            <th> Rang</th>
                             <th> Icone </th>
                             <th> Nom d'invocateur </th>
-                            <th> Level </th>
+                            <th> Parties </th>
                             <th> Classement </th>
                             <th> Winrate </th>
                         </tr>
@@ -47,15 +48,18 @@
                             <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/1/11/Season_2019_-_Master_1.png"/></th>
                             <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Season_2019_-_Diamond_1.png"/></th>
                             <th><a href="/login"><img src="https://i.pinimg.com/originals/d7/47/1e/d7471e2ef48175986e9b75b566f61408.png"/></a></th>
+                            <th><img src="https://static.wikia.nocookie.net/leagueoflegends/images/9/96/Season_2019_-_Gold_1.png"/></th>
                         </tr>
                     </tfoot>
                     <tbody>
                     <% Pair=true %>
+                    <% compteur = 1 %>
                     <% info_players.forEach(info_players => { %>
                         <tr class="<%=Pair%>">
+                            <td> <%=compteur%> </td>
                             <td> <img id="icon_summoner" src ="<%= info_players.icone%>"> </td>
                             <td><a  href="https://euw.op.gg/summoner/userName=<%= info_players.nom_invocateur%>" target="_blank"><%= info_players.nom_invocateur%> </a> </td>
-                            <td> <%= info_players.lvl%> </td>
+                            <td> <%= info_players.played%> </td>
                             <td> <%= info_players.tier %> 
                                 <% if (info_players.tier != "MASTER" && info_players.tier != "GRANDMASTER" && info_players.tier != "CHALLENGER") { %>
                                     <%= info_players.rank%> 
@@ -67,7 +71,8 @@
                             </td>
                             <td> <%= info_players.winrate%></td>
                         </tr>
-                    <% Pair = !Pair;%>
+                        <% Pair = !Pair;%>
+                        <% compteur = compteur + 1 %>
                     <% }); %>   
                     </tbody>
                 </table>

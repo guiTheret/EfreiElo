@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-const api_lol_key = ' RGAPI-9bf99511-c90f-425c-bdf6-afc1f4db2d93'
+const api_lol_key = 'RGAPI-9bf99511-c90f-425c-bdf6-afc1f4db2d93'
 
 
 var db = mysql.createConnection({
@@ -71,6 +71,44 @@ function isEmpty(obj) {
     }
     return true;
 }
+async function update_data_players_fromID(summoner_ID) {
+    get_player_data_step2(summoner_ID)
+    .then(response => {
+        if(response['status'] != 200 ) {
+            console.log("ERROR API " + response['status'])
+            return "error"
+        } else {
+            return response.json()
+        }
+    })
+    .then(data => {
+        if(data != "error") {
+            let sql = `SELECT nom_invocateur FROM info_players WHERE accountID = '${summoner_ID}'`;
+            let query = db.query(sql,function(err,info,fields) {
+                if(err) throw err;
+                console.log(data[0].summonerName + " " + info[0].nom_invocateur)
+                if(data[0].summonerName != info[0].nom_invocateur) {
+                    console.log("Changement de nom pour " + info[0].nom_invocateur);
+                    let sql = `UPDATE info_players SET nom_invocateur = '${data[0].summonerName}' WHERE accountID = '${summoner_ID}'`;
+                    let query = db.query(sql, function(err, result) {
+                        if(err) throw err;
+                    })
+                }
+            })
+            let i = soloq_over_flex(data)
+            if(i != "error" && data != "error") {
+                let winrate =  data[i].wins / (data[i].losses + data[i].wins) * 100           
+                let sql =` UPDATE info_players SET tier = '${data[i].tier}', rank_ok = '${data[i].rank}', lp = ${data[i].leaguePoints}, wins = ${data[i].wins}, looses = ${data[i].losses}, winrate = ${winrate} WHERE accountID = '${data[i].summonerId}'`;
+                let query = db.query(sql,function(err, result) {
+                    if (err) throw err;
+                })
+            }
+            update_data_players(data[0].summonerName)
+            console.log(data[0].summonerName + " has been updated")
+        }
+        
+    })
+}
 async function update_data_players(summoner) {
     get_player_data_step1(summoner)
     .then(response => {
@@ -82,30 +120,12 @@ async function update_data_players(summoner) {
         }
     })   
     .then(data => {
-        let sql = `UPDATE info_players SET lvl = '${data.summonerLevel}', icone ='${data.profileIconId}' WHERE accountID = '${data.id}'`
-        let query = db.query(sql,function (err, result) {
-            if (err) throw err;
-        })
-        get_player_data_step2(data.id)
-        .then(response => {
-            if(response['status'] != 200 ) {
-                console.log("ERROR API " + response['status'])
-                return "error"
-            } else {
-                return response.json()
-            }
-        })
-        .then(data2 => {
-            let i = soloq_over_flex(data2)
-            if(i != "error") {
-                let winrate =  data2[i].wins / (data2[i].losses + data2[i].wins) * 100           
-                let sql =` UPDATE info_players SET tier = '${data2[i].tier}', rank_ok = '${data2[i].rank}', lp = ${data2[i].leaguePoints}, wins = ${data2[i].wins}, looses = ${data2[i].losses}, winrate = ${winrate} WHERE accountID = '${data2[i].summonerId}'`;
-                let query = db.query(sql,function(err, result) {
-                    if (err) throw err;
-                })
-            }
-                     
-        })
+        if(data != "error") {
+            let sql = `UPDATE info_players SET lvl = '${data.summonerLevel}', icone ='${data.profileIconId}' WHERE accountID = '${data.id}'`
+            let query = db.query(sql,function (err, result) {
+                if (err) throw err;
+            })
+        }
     })
 }
 async function get_data_outside_scope(data,summoner) {
@@ -179,7 +199,8 @@ function summoner_info_sql_to_dict(info_players_query,case_dict) {
             rank: "",
             tier: "",
             lp: "",
-            winrate: ""
+            winrate: "",
+            played: ""
         };
         dict.nom_invocateur = element.nom_invocateur;
         if(case_dict == 1) {
@@ -238,6 +259,7 @@ function summoner_info_sql_to_dict(info_players_query,case_dict) {
             dict.elo += element.lp
             dict.lp = element.lp
             dict.tier = element.tier;
+            dict.played = element.looses + element.wins;
         }
         info_players.push(dict);
     });
@@ -260,25 +282,24 @@ function sort_players_descending(info_players){
     return info_players;
 }
 async function refresh_all_players() {
-    setInterval(() => {
-        let sql = "SELECT nom_invocateur FROM info_players"
-        let query = db.query(sql,(err, data_players,fields) => {
-            if (err) throw err;
-            console.log(data_players)
-            data_players.forEach((element,i) => {   
-                setTimeout(() => {
-                    update_data_players(element.nom_invocateur)
-                        console.log(element.nom_invocateur + " has been updated")
-                    }, i * 5000);
-        })
-        //console.log(data_players)
-        
-        })
-    },120*60*1000) // refresh de tous les joueurs toutes les 2h
+    console.log("Refresh dans 2H")
+    let sql = "SELECT accountID FROM info_players"
+    let query = db.query(sql,(err, data_players,fields) => {
+        if (err) throw err;
+        console.log(data_players)
+        data_players.forEach((element,i) => {   
+            setTimeout(() => {
+                    update_data_players_fromID(element.accountID)
+                    //console.log(element.accountID + " has been updated")
+                }, i * 5000);
+    })
+    //console.log(data_players)
+    
+    })
 }
 function load_index(req, res) {
     let info_players = [];
-    let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp FROM info_players WHERE validated = 1"
+    let sql = "SELECT id, nom_invocateur,lvl,icone,elo,rank_ok,tier,winrate,lp,wins,looses FROM info_players WHERE validated = 1"
     let query = db.query(sql, (err, info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query,1)
         res.render('index',{info_players: info_players}) 
@@ -291,6 +312,12 @@ function load_non_validated(req,res) {
     let query = db.query(sql,(err,info_players_query, fields) => {
         info_players = summoner_info_sql_to_dict(info_players_query,2)
         res.render('admin',{info_players: info_players})
+    })
+}
+function update_summmoner_name(ID_summoner,summoner) {
+    let sql = `UPDATE info_players SET nom_invocateur= '${summoner}' WHERE accountID = '${ID_summoner}'`;
+    let query = db.query(sql,(err) => {
+        if (err) throw err;
     })
 }
 function validate_summoner(summoner) {
